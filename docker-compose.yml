@@ -1,0 +1,64 @@
+version: '3.2'
+services:
+  nginx:
+    image: nginx:alpine
+    container_name: rproxy
+    ports: 
+      - "80:80"
+    volumes: 
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    networks: 
+      - front-end
+      - back-end
+    restart: always
+    depends_on: 
+      - web
+      - mysql
+
+  web:
+    build: 
+        context: https://github.com/iJou/actv3.git#:php 
+    image: harbor.tallerdevops.com/jazuaje/php:7.2-jou
+    container_name: myserphp
+    environment:
+      - MYSQL_USERNAME=root
+      - MYSQL_PASSWORD=jou1234
+      - MYSQL_DATABASE=Inventory
+      - MYSQL_HOST=sqlphp:3306
+    hostname: mystock
+    volumes:
+      - ~/Desktop/php/data:/var/www/html 
+    networks:
+      - back-end
+    links:
+      - mysql
+    restart: on-failure
+    stdin_open: true
+    tty: true    
+        
+  mysql:
+    build: 
+        context: https://github.com/iJou/actv3.git#:mysql
+    image: harbor.tallerdevops.com/jazuaje/mysql:5.7-jou
+    container_name: sqlphp
+    hostname: sqlphp
+    restart: always
+    networks: 
+      - back-end
+    environment:
+      - MYSQL_ROOT_PASSWORD=jou1234
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+volumes:
+  mysql-data: {}
+  
+networks:
+    front-end:
+      driver: bridge
+      ipam: 
+        driver: default
+        config: 
+        - subnet: 180.10.0.0/16
+    back-end:
+      driver: bridge
