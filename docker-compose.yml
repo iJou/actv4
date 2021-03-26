@@ -25,7 +25,6 @@ services:
       - MYSQL_PASSWORD=jou1234
       - MYSQL_DATABASE=Inventory
       - MYSQL_HOST=sqlphp:3306
-    hostname: mystock
     volumes:
       - ~/Desktop/php/data:/var/www/html 
     networks:
