@@ -17,7 +17,7 @@ services:
 
   web:
     build: 
-        context: https://github.com/iJou/actv3.git#:php 
+        context: https://github.com/iJou/actv4.git#:php 
     image: harbor.tallerdevops.com/jazuaje/php:7.2-jou
     container_name: myserphp
     environment:
@@ -26,7 +26,7 @@ services:
       - MYSQL_DATABASE=Inventory
       - MYSQL_HOST=sqlphp:3306
     volumes:
-      - ~/Desktop/php/data:/var/www/html 
+      - ./php/data:/var/www/html 
     networks:
       - back-end
     links:
@@ -37,9 +37,11 @@ services:
   
   web-homepage:
     build: 
-        context: https://github.com/iJou/actv3.git#:php_hpage
+        context: https://github.com/iJou/actv4.git#:php_hpage
     image: harbor.tallerdevops.com/jazuaje/php:7.2-jouhome
     container_name: myphphomepage
+    environment:
+      - Title=Inventario
     volumes:
       - ./php_hpage/data:/var/www/html 
     networks:
@@ -52,7 +54,7 @@ services:
 
   mysql:
     build: 
-        context: https://github.com/iJou/actv3.git#:mysql
+        context: https://github.com/iJou/actv4.git#:mysql
     image: harbor.tallerdevops.com/jazuaje/mysql:5.7-jou
     container_name: sqlphp
     hostname: sqlphp
