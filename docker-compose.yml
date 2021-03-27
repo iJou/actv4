@@ -34,7 +34,22 @@ services:
     restart: on-failure
     stdin_open: true
     tty: true    
-        
+  
+  web-homepage:
+    build: 
+        context: https://github.com/iJou/actv3.git#:php_hpage
+    image: harbor.tallerdevops.com/jazuaje/php:7.2-jouhome
+    container_name: myphphomepage
+    volumes:
+      - ./php_hpage/data:/var/www/html 
+    networks:
+      - back-end
+    links:
+      - mysql
+    restart: on-failure
+    stdin_open: true
+    tty: true    
+
   mysql:
     build: 
         context: https://github.com/iJou/actv3.git#:mysql

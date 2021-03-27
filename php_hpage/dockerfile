@@ -1,0 +1,23 @@
+﻿FROM php:7.2-apache
+
+LABEL  mantainer="Jounet" \
+			descripton="php_hpage" \
+			version="1.0"
+
+WORKDIR /var/www/html
+
+# Install mysql-client
+#RUN set -eux; \
+#			  apt-get update; \
+# 			  apt-get install -y mysql-client;
+
+# RUN docker-php-ext-install mysqli pdo pdo_mysql
+# RUN a2enmod rewrite
+
+# Copy Scripts SQL to Docker
+#RUN git clone https://github.com/iJou/actv3.git /myconfsql/
+#RUN cp -R /myconfsql/mysql/sqlscript/* /docker-entrypoint-initdb.d/
+
+#EXPOSE 81
+
+#CMD ["bash"]
